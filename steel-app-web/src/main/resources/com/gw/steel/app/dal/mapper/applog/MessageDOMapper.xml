@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gw.steel.app.dal.mapper.applog.MessageDOMapper" >
+  <resultMap id="BaseResultMap" type="com.gw.steel.app.dal.model.applog.MessageDO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="APP_NAME" property="appName" jdbcType="CHAR" />
+    <result column="NODE" property="node" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+    <result column="RECORD_CRT_TIME" property="recordCrtTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gw.steel.app.dal.model.applog.MessageDO" extends="BaseResultMap" >
+    <result column="MESSAGE" property="message" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, APP_NAME, NODE, LEVEL, RECORD_CRT_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    MESSAGE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gw.steel.app.dal.model.applog.MessageDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from T_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gw.steel.app.dal.model.applog.MessageDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from T_MESSAGE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_MESSAGE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gw.steel.app.dal.model.applog.MessageDOExample" >
+    delete from T_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gw.steel.app.dal.model.applog.MessageDO" >
+    insert into T_MESSAGE (ID, APP_NAME, NODE, 
+      LEVEL, RECORD_CRT_TIME, MESSAGE
+      )
+    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=CHAR}, #{node,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{recordCrtTime,jdbcType=TIMESTAMP}, #{message,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gw.steel.app.dal.model.applog.MessageDO" >
+    insert into T_MESSAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appName != null" >
+        APP_NAME,
+      </if>
+      <if test="node != null" >
+        NODE,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="recordCrtTime != null" >
+        RECORD_CRT_TIME,
+      </if>
+      <if test="message != null" >
+        MESSAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=CHAR},
+      </if>
+      <if test="node != null" >
+        #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="recordCrtTime != null" >
+        #{recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gw.steel.app.dal.model.applog.MessageDOExample" resultType="java.lang.Integer" >
+    select count(*) from T_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_MESSAGE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appName != null" >
+        APP_NAME = #{record.appName,jdbcType=CHAR},
+      </if>
+      <if test="record.node != null" >
+        NODE = #{record.node,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        LEVEL = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordCrtTime != null" >
+        RECORD_CRT_TIME = #{record.recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.message != null" >
+        MESSAGE = #{record.message,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update T_MESSAGE
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_NAME = #{record.appName,jdbcType=CHAR},
+      NODE = #{record.node,jdbcType=VARCHAR},
+      LEVEL = #{record.level,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{record.recordCrtTime,jdbcType=TIMESTAMP},
+      MESSAGE = #{record.message,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_MESSAGE
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_NAME = #{record.appName,jdbcType=CHAR},
+      NODE = #{record.node,jdbcType=VARCHAR},
+      LEVEL = #{record.level,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{record.recordCrtTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gw.steel.app.dal.model.applog.MessageDO" >
+    update T_MESSAGE
+    <set >
+      <if test="appName != null" >
+        APP_NAME = #{appName,jdbcType=CHAR},
+      </if>
+      <if test="node != null" >
+        NODE = #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="recordCrtTime != null" >
+        RECORD_CRT_TIME = #{recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message != null" >
+        MESSAGE = #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gw.steel.app.dal.model.applog.MessageDO" >
+    update T_MESSAGE
+    set APP_NAME = #{appName,jdbcType=CHAR},
+      NODE = #{node,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{recordCrtTime,jdbcType=TIMESTAMP},
+      MESSAGE = #{message,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gw.steel.app.dal.model.applog.MessageDO" >
+    update T_MESSAGE
+    set APP_NAME = #{appName,jdbcType=CHAR},
+      NODE = #{node,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{recordCrtTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

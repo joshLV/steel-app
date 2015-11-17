@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gw.steel.app.dal.mapper.applog.AppInfoDOMapper" >
+  <resultMap id="BaseResultMap" type="com.gw.steel.app.dal.model.applog.AppInfoDO" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="APP_NAME" property="appName" jdbcType="VARCHAR" />
+    <result column="CONTACT_TYPE" property="contactType" jdbcType="VARCHAR" />
+    <result column="CONTACT_INFO" property="contactInfo" jdbcType="VARCHAR" />
+    <result column="SUBJECT" property="subject" jdbcType="VARCHAR" />
+    <result column="RECORD_CRT_TIME" property="recordCrtTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, APP_NAME, CONTACT_TYPE, CONTACT_INFO, SUBJECT, RECORD_CRT_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_APP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_APP_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_APP_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDOExample" >
+    delete from T_APP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDO" >
+    insert into T_APP_INFO (ID, APP_NAME, CONTACT_TYPE, 
+      CONTACT_INFO, SUBJECT, RECORD_CRT_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{contactType,jdbcType=VARCHAR}, 
+      #{contactInfo,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{recordCrtTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDO" >
+    insert into T_APP_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appName != null" >
+        APP_NAME,
+      </if>
+      <if test="contactType != null" >
+        CONTACT_TYPE,
+      </if>
+      <if test="contactInfo != null" >
+        CONTACT_INFO,
+      </if>
+      <if test="subject != null" >
+        SUBJECT,
+      </if>
+      <if test="recordCrtTime != null" >
+        RECORD_CRT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactType != null" >
+        #{contactType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="recordCrtTime != null" >
+        #{recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDOExample" resultType="java.lang.Integer" >
+    select count(*) from T_APP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_APP_INFO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appName != null" >
+        APP_NAME = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactType != null" >
+        CONTACT_TYPE = #{record.contactType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactInfo != null" >
+        CONTACT_INFO = #{record.contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subject != null" >
+        SUBJECT = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordCrtTime != null" >
+        RECORD_CRT_TIME = #{record.recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_APP_INFO
+    set ID = #{record.id,jdbcType=BIGINT},
+      APP_NAME = #{record.appName,jdbcType=VARCHAR},
+      CONTACT_TYPE = #{record.contactType,jdbcType=VARCHAR},
+      CONTACT_INFO = #{record.contactInfo,jdbcType=VARCHAR},
+      SUBJECT = #{record.subject,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{record.recordCrtTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDO" >
+    update T_APP_INFO
+    <set >
+      <if test="appName != null" >
+        APP_NAME = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactType != null" >
+        CONTACT_TYPE = #{contactType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        CONTACT_INFO = #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        SUBJECT = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="recordCrtTime != null" >
+        RECORD_CRT_TIME = #{recordCrtTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gw.steel.app.dal.model.applog.AppInfoDO" >
+    update T_APP_INFO
+    set APP_NAME = #{appName,jdbcType=VARCHAR},
+      CONTACT_TYPE = #{contactType,jdbcType=VARCHAR},
+      CONTACT_INFO = #{contactInfo,jdbcType=VARCHAR},
+      SUBJECT = #{subject,jdbcType=VARCHAR},
+      RECORD_CRT_TIME = #{recordCrtTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
